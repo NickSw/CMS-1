@@ -1,0 +1,21 @@
+<%@ page import="ua.demo.util.PagingModel" %>
+<% PagingModel pm=(PagingModel)request.getAttribute("page_model"); %>
+<% if(pm.getLastPageNum()>1) { %>
+<div class="block">
+
+    <div class="pagination">
+        <ul>
+            <%
+                for (int i=0;i<pm.page.length;i++)
+                {
+                    if(pm.getPage()[i]==pm.getCurPage())
+                        out.println("<li><span class=\"active\">"+pm.getSymbol()[i]+"</span></li>");
+                    else
+                        out.println("<li><a href='"+pm.getUrl()+"page="+pm.getPage()[i]+"'>"+pm.getSymbol()[i]+"</a></li>");
+                }
+            %>
+        </ul>
+    </div>
+
+</div>
+<% } %>

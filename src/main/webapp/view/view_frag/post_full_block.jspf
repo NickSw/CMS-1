@@ -1,0 +1,16 @@
+    <div class="block">
+            <h2>${post.title}</h2>
+            <fmt:setLocale value="en_US"/>
+            <div class="info"> <span class="date"><fmt:formatDate value="${post.creationDate}" pattern="dd MMM YYYY"/></span> </div>
+            <img src="images/large_${post.id}.jpg" />
+            <p>${post.content}</p>
+
+        <div class="tags">
+            <h4>Related Tags:</h4>
+            <ul>
+                <c:forEach var="tag" items="${related_tags}">
+                <li><a href="/tag?id=${tag.id}">${tag.tagName}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </div>

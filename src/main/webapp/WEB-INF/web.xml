@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+  <display-name>CMS</display-name>
+  <servlet>
+    <servlet-name>userServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.userServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>mainServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.MainServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>postServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.PostServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>postTagServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.PostTagServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>archiveServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.ArchiveServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>searchServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.SearchServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>archiveDateServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.ArchiveDateServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>userServlet</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>mainServlet</servlet-name>
+    <url-pattern>/index.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>postServlet</servlet-name>
+    <url-pattern>/post</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>postTagServlet</servlet-name>
+    <url-pattern>/tag</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>archiveServlet</servlet-name>
+    <url-pattern>/archive</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>searchServlet</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>archiveDateServlet</servlet-name>
+    <url-pattern>/archivedate</url-pattern>
+  </servlet-mapping>
+
+</web-app>

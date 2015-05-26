@@ -1,0 +1,21 @@
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
+<div class="block archive">
+    <h3>ARCHIVE</h3>
+    <ul>
+        <%
+            SimpleDateFormat dateHref=new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
+            SimpleDateFormat dateSpan=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+            List<Date> dates= (List<Date>)request.getAttribute("archive_dates");
+            for (Date date:dates)
+            {
+                out.println("<li><a href=\"/archivedate?date="+dateHref.format(date)+"\">");
+                out.println(dateSpan.format(date));
+                out.println("</a></li>");
+            }
+        %>
+    </ul>
+
+</div>

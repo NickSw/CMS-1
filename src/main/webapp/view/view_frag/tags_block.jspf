@@ -1,0 +1,8 @@
+<div class="block tags">
+    <h3>TAGS</h3>
+    <ul>
+        <c:forEach var="tag" items="${tags}">
+            <li><a href="/tag?id=${tag.id}">${tag.tagName}</a></li>
+        </c:forEach>
+    </ul>
+</div>

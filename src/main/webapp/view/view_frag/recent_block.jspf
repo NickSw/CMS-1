@@ -1,0 +1,8 @@
+<div class="block">
+    <h3>RECENT POSTS</h3>
+    <c:forEach var="post" items="${recent_posts}">
+        <div class="small_post"> <img src="images/small_${post.id}.jpg" width="60" height="50" />
+            <h5><a href="/post?id=${post.id}">${post.title}</a></h5>
+        </div>
+    </c:forEach>
+</div>
