@@ -1,0 +1,7 @@
+<%
+    String[] head=(String[]) request.getAttribute("head");
+    if (head!=null) { %>
+<div class="block">
+    <h2 class="feature">${head[0]}</h2> ${head[1]}
+</div>
+<% } %>

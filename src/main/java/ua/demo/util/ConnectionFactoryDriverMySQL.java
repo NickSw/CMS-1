@@ -10,6 +10,11 @@ public class ConnectionFactoryDriverMySQL implements ConnectionFactory{
     private final String USER="root";
     private final String PASSWORD="password";
 
+//    private final String URL="jdbc:mysql://127.4.28.130:3306/news";
+//    private final String USER="adminQeRj6dt";
+//    private final String PASSWORD="MgDvrBAy3Urb";
+
+
     public ConnectionFactoryDriverMySQL() {
     }
 

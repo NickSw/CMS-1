@@ -7,6 +7,7 @@ public class User extends Entity{
     private String email;
     private String password;
     private String role;
+    private int roleId;
 
     //getters and setters
     public String getFirstName() {
@@ -55,5 +56,13 @@ public class User extends Entity{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 }

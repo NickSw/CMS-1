@@ -24,7 +24,7 @@ public class PostDAOImpl implements PostDAO {
 
     private final String SELECT_BY_SEARCH="SELECT * FROM post WHERE";
     private final String SELECT_BY_SEARCH_INTITLE=" title LIKE '%";
-    private final String SELECT_BY_SEARCH_INCONTENT=" content LIKE '% ";
+    private final String SELECT_BY_SEARCH_INCONTENT=" content LIKE '%";
 
     private final String SELECT_DATES="SELECT id,title,creation_date,EXTRACT(YEAR FROM creation_date) AS `year`,EXTRACT(MONTH FROM creation_date) AS `month` FROM post GROUP BY year,month ORDER BY creation_date DESC";
     private final String SELECT_BY_YEAR_AND_MONTH="SELECT * FROM post WHERE EXTRACT(YEAR FROM creation_date)=EXTRACT(YEAR FROM '${date}') AND EXTRACT(MONTH FROM creation_date)=EXTRACT(MONTH FROM '${date}') ORDER BY creation_date DESC";
@@ -120,7 +120,7 @@ public class PostDAOImpl implements PostDAO {
         }
         else {
             if (inContent) {
-                SQLquery = SQLquery + SELECT_BY_SEARCH_INCONTENT + text + "%'";
+                SQLquery = SQLquery + SELECT_BY_SEARCH_INCONTENT + text + " %'";
             }
         }
         return SQLquery;
@@ -135,7 +135,7 @@ public class PostDAOImpl implements PostDAO {
         if (inTitle) {
             SQLquery = SQLquery + SELECT_BY_SEARCH_INTITLE + text + "%'";
             if (inContent) {
-                SQLquery = SQLquery + " OR "+SELECT_BY_SEARCH_INCONTENT + text + " %'";
+                SQLquery = SQLquery + " OR "+SELECT_BY_SEARCH_INCONTENT + text + "%'";
             }
         }
         else {

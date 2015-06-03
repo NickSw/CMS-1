@@ -1,0 +1,19 @@
+<!--users block-->
+<div class="block">
+    <h3>users</h3>
+    <ul>
+        <li><a href="/admin/users">Users list</a></li>
+        <li><a href="/admin/user">New User</a></li>
+    </ul>
+</div>
+<!--end of users block-->
+
+<!--posts block-->
+<div class="block">
+    <h3>posts</h3>
+    <ul>
+        <li><a href="#">Posts list</a></li>
+        <li><a href="#">New Post</a></li>
+    </ul>
+</div>
+<!--end of posts block-->
