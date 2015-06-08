@@ -1,0 +1,26 @@
+
+<%
+    String[] head=(String[]) request.getAttribute("head");
+    if (head!=null) { %>
+<div class="block">
+    <h2 class="feature">${head[0]}</h2> ${head[1]}
+</div>
+<% } %>
+
+<div class="block">
+    <h2>Tag</h2>
+    <form action="/admin/tagupdate" method="GET">
+        <input type="hidden" name="id" value="${tag.id}">
+        <table border="0">
+            <tr>
+                <td>Tag Name<span class="red_asterix">*</span></td>
+                <td><input type="text" name="tag" size="24" maxlength="24" value="${tag.tagName}"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td align="right"><input type="submit" value=" save "></td>
+            </tr>
+        </table>
+    </form>
+</div>

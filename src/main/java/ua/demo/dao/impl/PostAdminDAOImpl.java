@@ -94,8 +94,6 @@ public class PostAdminDAOImpl implements PostAdminDAO{
         query=query.replace("${userid}",String.valueOf(post.getUserId()));
         query=query+post.getId();
 
-        System.out.println(query);
-
         Statement stat=null;
         try {
 
@@ -111,7 +109,7 @@ public class PostAdminDAOImpl implements PostAdminDAO{
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(post.getId()));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId1()));
-                    System.out.println(query);
+
                     stat.executeUpdate(query);
 
 
@@ -121,7 +119,7 @@ public class PostAdminDAOImpl implements PostAdminDAO{
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(post.getId()));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId2()));
-                    System.out.println(query);
+
                     stat.executeUpdate(query);
 
                 }
@@ -130,7 +128,7 @@ public class PostAdminDAOImpl implements PostAdminDAO{
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(post.getId()));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId3()));
-                    System.out.println(query);
+
                     stat.executeUpdate(query);
 
                 }
@@ -168,8 +166,6 @@ public class PostAdminDAOImpl implements PostAdminDAO{
         query=query.replace("${mark}",String.valueOf(post.getMark()));
         query=query.replace("${userid}",String.valueOf(post.getUserId()));
 
-        System.out.println(query);
-
         Statement stat=null;
         try {
 
@@ -190,28 +186,24 @@ public class PostAdminDAOImpl implements PostAdminDAO{
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(id));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId1()));
-                    System.out.println(query);
+
                     stat.executeUpdate(query);
-
-
                 }
 
                 if ((post.getTagId2() > 0)&&(post.getTagId2()!=post.getTagId1())) {
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(id));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId2()));
-                    System.out.println(query);
-                    stat.executeUpdate(query);
 
+                    stat.executeUpdate(query);
                 }
 
                 if ((post.getTagId3() > 0)&&(post.getTagId3()!=post.getTagId1())&&(post.getTagId3()!=post.getTagId2())) {
                     query = INSERT_POST_TAG;
                     query = query.replace("${postid}", String.valueOf(id));
                     query = query.replace("${tagid}", String.valueOf(post.getTagId3()));
-                    System.out.println(query);
-                    stat.executeUpdate(query);
 
+                    stat.executeUpdate(query);
                 }
 
             con.commit();

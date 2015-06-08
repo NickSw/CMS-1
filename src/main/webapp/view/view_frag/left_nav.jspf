@@ -24,9 +24,19 @@
         </ul>
     </div>
 </c:if>
-
-
 <!--end of users block-->
+
+<!--tags block-->
+<c:if test="${(curuser.role eq 'admin') or (curuser.role eq 'editor')}">
+    <div class="block">
+        <h3>tags</h3>
+        <ul>
+            <li><a href="/admin/tags">Tags list</a></li>
+            <li><a href="/admin/tag">New Tag</a></li>
+        </ul>
+    </div>
+</c:if>
+<!--end of tags block-->
 
 <!--posts block-->
 <div class="block">

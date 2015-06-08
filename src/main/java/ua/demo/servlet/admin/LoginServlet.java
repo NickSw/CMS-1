@@ -75,7 +75,6 @@ public class LoginServlet extends HttpServlet{
                 }
             }
 
-           System.out.println(errorMsg);
             //there was an error
             req.setAttribute("error",errorMsg);
 

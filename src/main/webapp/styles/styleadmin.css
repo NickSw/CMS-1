@@ -8,7 +8,7 @@ p{
 body { background:#e9e9e9;}
 
 #container{
-	max-width:960px;
+	max-width:1050px;
 	margin: 0 auto;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size: 14px;
@@ -72,8 +72,8 @@ a {
 
 
 .content{
-	width:86.46%;
-	margin:0px 0 30px 130px;
+	width:80%;
+	margin:0px 0 30px 210px;
 }
 
 .content .block a {
@@ -103,7 +103,7 @@ a {
 
 #left_side_bar{
 	float:left;
-	width:120px;
+	width:200px;
 
 }
 

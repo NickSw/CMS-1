@@ -220,7 +220,7 @@ public class PostUpdateServlet extends HttpServlet{
         if (name.equals("title")){
             if ((value==null)||(value.isEmpty())){
                 error=true;
-                errorMsg="title";
+                errorMsg="empty title";
             } else {
                 value=value.replace("'","`");
                 post.setTitle(value);
@@ -291,14 +291,20 @@ public class PostUpdateServlet extends HttpServlet{
         if (name.equals("content")){
             if ((value==null)||(value.isEmpty())){
                 error=true;
-                errorMsg="content";
+                errorMsg="empty content";
             } else {
                 value=value.replace("'","`");
                 post.setContent(value);
             }
         }
 
-        post.setUserId(curUser.getId());
+        if (name.equals("userid")){
+            int userId=curUser.getId();
+            try {
+                userId=Integer.parseInt(value);
+            } catch (Exception ex) {}
+            post.setUserId(userId);
+        }
 
         if (error) return errorMsg;
         else return null;

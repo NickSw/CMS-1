@@ -11,6 +11,7 @@
 
     <form action="/admin/postupdate" enctype="multipart/form-data" method="POST">
         <input type="hidden" name="id" value="${post.id}">
+        <input type="hidden" name="userid" value="${post.userId}">
         <table border="0" cellspacing="4">
             <tr>
                 <td valign="top">Image:</td>

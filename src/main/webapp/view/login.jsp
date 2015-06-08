@@ -14,7 +14,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>32Seconds2Demo</title>
-  <link href="styles/style.css" rel="stylesheet" type="text/css" />
   <style type="text/css">
     body {
       background:#eeeeef;
@@ -37,9 +36,9 @@
 <body>
 
 <div id="main">
-  <p  class="error">
+  <div  class="error">
     ${error}
-  </p>
+  </div>
   <br>
 
   <form action="/login" method="POST">
@@ -47,7 +46,7 @@
     <input type="text" name="login" maxlength="45" size="30" /><br />
     <br />
     Password<br />
-    <input type="text" name="password" maxlength="45" size="30" /><br />
+    <input type="password" name="password" maxlength="45" size="30" /><br />
     <br />
     <input type="submit" value=" Log in ">
   </form>

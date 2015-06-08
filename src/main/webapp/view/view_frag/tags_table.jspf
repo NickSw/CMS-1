@@ -1,0 +1,35 @@
+<%@ page import="ua.demo.entity.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="ua.demo.entity.Tag" %>
+
+<%--
+  Created by IntelliJ IDEA.
+  User: Sergey
+  Date: 02.06.2015
+  Time: 18:39
+  To change this template use File | Settings | File Templates.
+--%>
+<div class="block">
+    <h2 class="feature">All tags</h2>
+    <table border="0" width="60%" cellpadding="2" cellspacing="2">
+        <tr>
+            <th>Tag Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <%
+            List<Tag> tags=(List<Tag>) request.getAttribute("tags");
+            int i=0;
+            for (Tag tag:tags) {
+                if (i%2!=0) out.println("<tr class=\"even\">");
+                else out.println("<tr>");
+                out.println("<td>"+tag.getTagName()+"</td>");
+                out.println("<td align=\"center\"><a href=\"/admin/tag?id="+tag.getId()+"\">update</a></td>");
+                out.println("<td align=\"center\"><a href=\"/admin/tagdelete?id="+tag.getId()+"\">delete</a></td>");
+                out.println("</tr>");
+                i++;
+            }%>
+
+    </table>
+</div>

@@ -19,7 +19,7 @@ public class AdminServlet extends HttpServlet{
         req.setAttribute("curuser",curUser);
 
         String[] head=new String[2];
-        head[0]="Welcome "+curUser.getLogin()+" to admin panel";
+        head[0]="Welcome    "+curUser.getLogin()+"    to admin panel";
         head[1]="";
         req.setAttribute("head",head);
 

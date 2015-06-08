@@ -107,8 +107,6 @@ public class UserDAOImpl implements UserDAO {
                 query=query.replace("${password}", user.getPassword());
                 query=query.replace("${roleid}", String.valueOf(user.getRoleId()));
 
-                System.out.println(query);
-
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
@@ -129,8 +127,6 @@ public class UserDAOImpl implements UserDAO {
                 query=query.replace("${roleid}", String.valueOf(user.getRoleId()));
                 query=query.replace("${id}", String.valueOf(user.getId()));
 
-                System.out.println(query);
-
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
@@ -143,13 +139,16 @@ public class UserDAOImpl implements UserDAO {
         else return false;
     }
 
-    public void deleteById(int id) {
+    public boolean deleteById(int id) {
+        int res=-1;
         try {
             Statement stat=con.createStatement();
-            int res=stat.executeUpdate(DELETE_BY_ID+id);
+            res=stat.executeUpdate(DELETE_BY_ID+id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (res<1) return false;
+        else return true;
 
     }
 

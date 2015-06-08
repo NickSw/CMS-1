@@ -87,6 +87,26 @@
     <servlet-class>ua.demo.servlet.admin.LogoutServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>tagsListServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.TagsListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>tagServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.TagServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>tagUpdateServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.TagUpdateServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>tagDeleteServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.TagDeleteServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>usersServlet</servlet-name>
     <url-pattern>/admin/users</url-pattern>
@@ -170,6 +190,26 @@
   <servlet-mapping>
     <servlet-name>logoutServlet</servlet-name>
     <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>tagsListServlet</servlet-name>
+    <url-pattern>/admin/tags</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>tagServlet</servlet-name>
+    <url-pattern>/admin/tag</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>tagUpdateServlet</servlet-name>
+    <url-pattern>/admin/tagupdate</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>tagDeleteServlet</servlet-name>
+    <url-pattern>/admin/tagdelete</url-pattern>
   </servlet-mapping>
 
  <!-- <session-config>

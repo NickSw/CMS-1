@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Untitled Document</title>
+    <title>32Seconds2Demo</title>
     <link href="/styles/styleadmin.css" rel="stylesheet" type="text/css" />
 </head>
 

@@ -8,7 +8,7 @@
 <% } %>
 
 <div class="block">
-    <h2 class="feature">User</h2>
+    <h2>User</h2>
     <form action="/admin/userupdate" method="GET">
         <input type="hidden" name="id" value="${user.id}">
         <table border="0">
@@ -30,11 +30,11 @@
             </tr>
             <tr>
                 <td>Password<span class="red_asterix">*</span></td>
-                <td><input type="text" name="pass1" size="24" maxlength="24"  value="${user.password}"></td>
+                <td><input type="password" name="pass1" size="24" maxlength="24"  value="${user.password}"></td>
             </tr>
             <tr>
                 <td>Password<span class="red_asterix">*</span></td>
-                <td><input type="text" name="pass2" size="24" maxlength="24"  value="${user.password}"></td>
+                <td><input type="password" name="pass2" size="24" maxlength="24"  value="${user.password}"></td>
             </tr>
             <tr>
                 <td>Role<span class="red_asterix">*</span></td>

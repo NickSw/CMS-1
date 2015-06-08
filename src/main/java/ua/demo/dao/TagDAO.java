@@ -7,4 +7,6 @@ public interface TagDAO {
     public Tag getById(int id);
     public List<Tag> getAll();
     public List<Tag> getByPost(int id);
+    public boolean addTag(Tag tag);
+    public boolean deleteById(int id);
 }

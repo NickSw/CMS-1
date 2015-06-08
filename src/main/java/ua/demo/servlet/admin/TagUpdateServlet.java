@@ -1,10 +1,10 @@
 package ua.demo.servlet.admin;
 
-import ua.demo.dao.RoleDAO;
+import ua.demo.dao.TagDAO;
 import ua.demo.dao.UserDAO;
-import ua.demo.dao.impl.RoleDAOImpl;
+import ua.demo.dao.impl.TagDAOImpl;
 import ua.demo.dao.impl.UserDAOImpl;
-import ua.demo.entity.Role;
+import ua.demo.entity.Tag;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
- * Created by Sergey on 03.06.2015.
+ * Created by Sergey on 08.06.2015.
  */
-public class UserUpdateServlet extends HttpServlet {
+public class TagUpdateServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User curUser=(User)req.getSession(false).getAttribute("curuser");
@@ -29,40 +28,22 @@ public class UserUpdateServlet extends HttpServlet {
 
         //get query string parameters
         String idStr=req.getParameter("id");
-        String firstName=req.getParameter("first");
-        String lastName=req.getParameter("last");
-        String login=req.getParameter("login");
-        String email=req.getParameter("email");
-        String pass1=req.getParameter("pass1");
-        String pass2=req.getParameter("pass2");
-        String roleStr=req.getParameter("role");
+        String tagName=req.getParameter("tag");
+
 
         //check paramameters
         boolean error=false;
         String errorMsg="";
 
-        if ((firstName==null)||(firstName.isEmpty())) firstName=" ";
-        if ((lastName==null)||(lastName.isEmpty())) lastName=" ";
-        if ((login==null)||(login.isEmpty())) {
+
+        if ((tagName==null)||(tagName.isEmpty())) {
             error=true;
-            errorMsg+=" empty login;";
-        }
-        if ((email==null)||(email.isEmpty())||(email.indexOf('@')<0)) {
-            error=true;
-            errorMsg+=" incorrect email;";
-        }
-        if ((pass1==null)||(pass1.isEmpty())||(pass2==null)||(pass2.isEmpty())||(!pass1.equals(pass2))) {
-            error=true;
-            errorMsg+=" empty password;";
+            errorMsg+="empty tag";
+        } else {
+            //defense of sql injections
+            tagName=tagName.replace("'","`");
         }
 
-        int roleId=-1;
-        try {
-            roleId = Integer.parseInt(roleStr);
-        } catch (Exception ex) {
-            error=true;
-            errorMsg+=" role;";
-        }
 
         int id=-1;
         try {
@@ -82,19 +63,15 @@ public class UserUpdateServlet extends HttpServlet {
             ConnectionFactory conf= ConnectionFactoryFactory.getConnectionFactory();
             Connection con=conf.getConnection();
 
-            //create user
-            User user=new User();
-            user.setId(id);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setLogin(login);
-            user.setEmail(email);
-            user.setPassword(pass1);
-            user.setRoleId(roleId);
+            //create tag
+            Tag tag=new Tag();
+            tag.setId(id);
+            tag.setTagName(tagName);
 
-            //add user
-            UserDAO userDAO=new UserDAOImpl(con);
-            boolean res=userDAO.addUser(user);
+
+            //add tag
+            TagDAO tagDao=new TagDAOImpl(con);
+            boolean res=tagDao.addTag(tag);
 
             //close connection
             try {
@@ -104,7 +81,7 @@ public class UserUpdateServlet extends HttpServlet {
             }
 
             if (res) {
-                //ok user was added
+                //ok tag was added
 
                 String[] head=new String[2];
                 head[0]="Ok:";

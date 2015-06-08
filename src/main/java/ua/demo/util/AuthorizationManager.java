@@ -21,13 +21,22 @@ public class AuthorizationManager {
             if (uri.equals("/admin/users")) return false;
             if (uri.equals("/admin/user")) return false;
             if (uri.equals("/admin/userdelete")) return false;
+            if (uri.equals("/admin/userupdate")) return false;
 
             if (user.getRole().equals("author")){
                 if (uri.equals("/admin/postdelete")) return false;
+                if (uri.equals("/admin/tag")) return false;
+                if (uri.equals("/admin/tags")) return false;
+                if (uri.equals("/admin/tagupdate")) return false;
+                if (uri.equals("/admin/tagdelete")) return false;
             }
 
             if (user.getRole().equals("corrector")){
                 if (uri.equals("/admin/postdelete")) return false;
+                if (uri.equals("/admin/tag")) return false;
+                if (uri.equals("/admin/tags")) return false;
+                if (uri.equals("/admin/tagupdate")) return false;
+                if (uri.equals("/admin/tagdelete")) return false;
             }
         }
 

@@ -10,7 +10,10 @@
                 </c:otherwise>
             </c:choose>
             <fmt:setLocale value="en_US"/>
-            <div class="info"> <span class="date"><fmt:formatDate value="${post.creationDate}" pattern="dd MMM YYYY"/></span> </div>
+            <div class="info">
+                <span class="date"><fmt:formatDate value="${post.creationDate}" pattern="dd MMM YYYY"/></span>
+                <c:if test="${post.mark}"><div class="hot">HOT</div></c:if>
+            </div>
             <img src="images/large_${post.id}.jpg" />
             <!--width="470" height="262"-->
             <p>${post.content}</p>
