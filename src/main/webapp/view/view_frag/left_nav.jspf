@@ -1,19 +1,41 @@
-<!--users block-->
+
+<!--current user block-->
 <div class="block">
-    <h3>users</h3>
+    <h3 class="feature">current user</h3>
     <ul>
-        <li><a href="/admin/users">Users list</a></li>
-        <li><a href="/admin/user">New User</a></li>
+        <li>${curuser.role}:</li>
+        <li>${curuser.login}</li>
+        <br />
+        <form action="/logout" method="get">
+
+            <input type="submit" value=" log out " />
+        </form>
     </ul>
+
 </div>
+
+<!--users block-->
+<c:if test="${curuser.role eq 'admin'}">
+    <div class="block">
+        <h3>users</h3>
+        <ul>
+            <li><a href="/admin/users">Users list</a></li>
+            <li><a href="/admin/user">New User</a></li>
+        </ul>
+    </div>
+</c:if>
+
+
 <!--end of users block-->
 
 <!--posts block-->
 <div class="block">
     <h3>posts</h3>
     <ul>
-        <li><a href="#">Posts list</a></li>
-        <li><a href="#">New Post</a></li>
+        <li><a href="/admin/postslist?order=2">Posts list</a></li>
+        <c:if test="${!(curuser.role eq 'corrector')}">
+            <li><a href="/admin/postform">New Post</a></li>
+        </c:if>
     </ul>
 </div>
 <!--end of posts block-->

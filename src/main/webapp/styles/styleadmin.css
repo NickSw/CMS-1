@@ -72,8 +72,8 @@ a {
 
 
 .content{
-	width:77.08%;
-	margin:0px 0 30px 220px;
+	width:86.46%;
+	margin:0px 0 30px 130px;
 }
 
 .content .block a {
@@ -103,7 +103,7 @@ a {
 
 #left_side_bar{
 	float:left;
-	width:210px;
+	width:120px;
 
 }
 
@@ -152,6 +152,10 @@ a {
 
 
 .content .block h2.feature{
+	color:#d00606;
+}
+
+.feature{
 	color:#d00606;
 }
 

@@ -1,4 +1,4 @@
-package ua.demo.servlet;
+package ua.demo.servlet.admin;
 
 import ua.demo.dao.RoleDAO;
 import ua.demo.dao.UserDAO;
@@ -24,6 +24,9 @@ import java.util.List;
 public class UserServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User curUser=(User)req.getSession(false).getAttribute("curuser");
+        req.setAttribute("curuser",curUser);
+
         //check request string parameters
         //id=-1 add new user
         //id>0 update user with id

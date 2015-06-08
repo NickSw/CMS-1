@@ -15,6 +15,7 @@ public class UserDAOImpl implements UserDAO {
     private final String INSERT="INSERT INTO user (first_name,last_name,login,email,password,role_id) VALUES ('${first}','${last}','${login}','${email}','${password}',${roleid})";
     private final String UPDATE_BY_ID="UPDATE user SET first_name='${first}', last_name='${last}',login='${login}',email='${email}',password='${password}',role_id=${roleid} WHERE id=${id}";
     private final String DELETE_BY_ID="DELETE FROM user WHERE id=";
+    private final String SELECT_BY_LOGIN="SELECT * FROM user,role where role.id=role_id AND login=";
 
 
     private Connection con;
@@ -32,9 +33,27 @@ public class UserDAOImpl implements UserDAO {
         user.setLogin(rs.getString("login"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
+        user.setRoleId(rs.getInt("role_id"));
         user.setRole(rs.getString("role_name"));
     }
 
+
+    public User getByLogin(String login) {
+        try {
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery(SELECT_BY_LOGIN +"'"+ login+"'");
+            User user = new User();
+            while (rs.next()) {
+                fillValues(user, rs);
+            }
+            if (user.getId()==0) return null;
+            else return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<User> getAll() {
          try {
@@ -133,5 +152,6 @@ public class UserDAOImpl implements UserDAO {
         }
 
     }
+
 
 }

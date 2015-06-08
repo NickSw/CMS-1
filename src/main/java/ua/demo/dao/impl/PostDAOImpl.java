@@ -333,8 +333,13 @@ public class PostDAOImpl implements PostDAO {
         post.setTitle(rs.getString("title"));
         post.setCreationDate(rs.getTimestamp("creation_date"));
         post.setLastUpdateDate(rs.getTimestamp("last_update_date"));
+
         Clob content=rs.getClob("content");
+        if (length>content.length()) {
+            length=(int)content.length();
+        }
         post.setContent(content.getSubString(1,length)+"...");
+
         post.setOrdering(rs.getInt("ordering"));
         post.setMark(rs.getBoolean("mark"));
         post.setUserId(rs.getInt("user_id"));

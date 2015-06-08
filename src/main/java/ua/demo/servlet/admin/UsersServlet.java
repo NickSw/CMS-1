@@ -1,4 +1,4 @@
-package ua.demo.servlet;
+package ua.demo.servlet.admin;
 
 
 import ua.demo.dao.UserDAO;
@@ -19,6 +19,9 @@ import java.util.List;
 public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User curUser=(User)req.getSession(false).getAttribute("curuser");
+        req.setAttribute("curuser",curUser);
+
         //create connection
         ConnectionFactory conf= ConnectionFactoryFactory.getConnectionFactory();
         Connection con=conf.getConnection();

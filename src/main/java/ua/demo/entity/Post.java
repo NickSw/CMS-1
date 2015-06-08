@@ -10,6 +10,11 @@ public class Post extends Entity{
     private int ordering;
     private boolean mark;
     private int userId;
+    private String userLogin;
+    private int tagId1;
+    private int tagId2;
+    private int tagId3;
+
 
     //getters and setters
     public String getTitle() {
@@ -52,7 +57,7 @@ public class Post extends Entity{
         this.ordering = ordering;
     }
 
-    public boolean isMark() {
+    public boolean getMark() {
         return mark;
     }
 
@@ -66,5 +71,37 @@ public class Post extends Entity{
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public int getTagId1() {
+        return tagId1;
+    }
+
+    public void setTagId1(int tagId1) {
+        this.tagId1 = tagId1;
+    }
+
+    public int getTagId2() {
+        return tagId2;
+    }
+
+    public void setTagId2(int tagId2) {
+        this.tagId2 = tagId2;
+    }
+
+    public int getTagId3() {
+        return tagId3;
+    }
+
+    public void setTagId3(int tagId3) {
+        this.tagId3 = tagId3;
     }
 }

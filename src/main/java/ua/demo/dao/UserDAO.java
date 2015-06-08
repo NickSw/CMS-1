@@ -9,4 +9,5 @@ public interface UserDAO {
     public User getById(int id);
     public boolean addUser(User user);
     public void deleteById(int id);
+    public User getByLogin(String login);
 }

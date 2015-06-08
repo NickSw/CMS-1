@@ -1,4 +1,4 @@
-package ua.demo.servlet;
+package ua.demo.servlet.admin;
 
 import ua.demo.dao.RoleDAO;
 import ua.demo.dao.UserDAO;
@@ -24,6 +24,9 @@ import java.util.List;
 public class UserUpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User curUser=(User)req.getSession(false).getAttribute("curuser");
+        req.setAttribute("curuser",curUser);
+
         //get query string parameters
         String idStr=req.getParameter("id");
         String firstName=req.getParameter("first");
@@ -101,10 +104,16 @@ public class UserUpdateServlet extends HttpServlet {
             }
 
             if (res) {
-                resp.sendRedirect("/admin/users");
-                return;
-            }else {
+                //ok user was added
 
+                String[] head=new String[2];
+                head[0]="Ok:";
+                head[1]="user was added";
+                req.setAttribute("head",head);
+
+                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+            }else {
+                //error
                 String[] head=new String[2];
                 head[0]="ERROR:";
                 head[1]="";

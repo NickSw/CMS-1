@@ -1,0 +1,95 @@
+<div class="block">
+    <h2 class="feature">All posts</h2>
+    <p>
+    Order by:
+    <form action="/admin/postslist">
+
+        <c:choose>
+            <c:when test="${order==1}">
+                <input type="radio" name="order" value="1" checked /> title |
+            </c:when>
+            <c:otherwise>
+                <input type="radio" name="order" value="1" /> title |
+            </c:otherwise>
+        </c:choose>
+
+    <c:choose>
+        <c:when test="${order==2}">
+            <input type="radio" name="order" value="2" checked /> date |
+        </c:when>
+        <c:otherwise>
+            <input type="radio" name="order" value="2" /> date |
+        </c:otherwise>
+    </c:choose>
+
+    <c:choose>
+        <c:when test="${order==3}">
+            <input type="radio" name="order" value="3" checked /> ordering |
+        </c:when>
+        <c:otherwise>
+            <input type="radio" name="order" value="3" /> ordering |
+        </c:otherwise>
+    </c:choose>
+
+    <c:choose>
+        <c:when test="${order==4}">
+            <input type="radio" name="order" value="4" checked /> author
+        </c:when>
+        <c:otherwise>
+            <input type="radio" name="order" value="4" /> author
+        </c:otherwise>
+    </c:choose>
+
+    <input type="submit" value=" ok " />
+
+    </form>
+    </p>
+    <table border="0" width="100%" cellpadding="2" cellspacing="2">
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th width="85px">Date</th>
+            <th>Ordering</th>
+            <th>Author</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <c:forEach var="post" items="${posts}">
+            <tr>
+                <td><img src="/images/small_${post.id}.jpg"/></td>
+
+                <c:choose>
+                    <c:when test="${post.mark eq \"true\"}">
+                        <td class="feature">${post.title}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${post.title}</td>
+                    </c:otherwise>
+                </c:choose>
+
+
+                <td><fmt:formatDate value="${post.creationDate}" pattern="YYYY-MM-dd"/></td>
+                <td align="center">${post.ordering}</td>
+                <td>${post.userLogin}</td>
+                <c:choose>
+                    <c:when test="${!(curuser.role eq 'author')}">
+                        <td><a href="/admin/postform?id=${post.id}">update</a></td>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${curuser.id eq post.userId}">
+                            <td><a href="/admin/postform?id=${post.id}">update</a></td>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+
+
+
+                <c:if test="${!(curuser.role eq 'author') and !(curuser.role eq 'corrector')}">
+                    <td><a href="/admin/postdelete?id=${post.id}">delete</a></td>
+                </c:if>
+            </tr>
+        </c:forEach>
+
+    </table>
+</div>

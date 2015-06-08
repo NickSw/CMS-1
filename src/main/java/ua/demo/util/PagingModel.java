@@ -4,7 +4,7 @@ package ua.demo.util;
  */
 public class PagingModel {
     //amount of elements on page
-    private final int PAGE_ROWS =2;
+    private int PAGE_ROWS =2;
     //amount of neighbours of current page in paging line
     //i.e. length of paging line
     private final int N_NUM = 2;
@@ -27,6 +27,15 @@ public class PagingModel {
 
 
     public PagingModel(int total, int curPage,String url) {
+        init(total, curPage, url);
+    }
+
+    public PagingModel(int total, int curPage,String url,int rows) {
+        PAGE_ROWS=rows;
+        init(total, curPage, url);
+    }
+
+    private void init(int total, int curPage,String url){
         this.total = total;
         this.url=url;
         LastPageNum = (int) Math.ceil(total / (double) PAGE_ROWS);

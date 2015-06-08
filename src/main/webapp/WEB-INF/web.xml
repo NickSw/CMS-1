@@ -4,7 +4,7 @@
   <display-name>CMS</display-name>
   <servlet>
     <servlet-name>usersServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.UsersServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UsersServlet</servlet-class>
   </servlet>
   
   <servlet>
@@ -39,22 +39,52 @@
   
   <servlet>
     <servlet-name>adminServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.AdminServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.AdminServlet</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>userServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.UserServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UserServlet</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>userUpdateServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.UserUpdateServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UserUpdateServlet</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>userDeleteServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.UserDeleteServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UserDeleteServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>postsListServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.PostsListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>postFormServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.PostFormServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>postUpdateServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.PostUpdateServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>postDeleteServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.PostDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>logoutServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.admin.LogoutServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -94,7 +124,7 @@
 
   <servlet-mapping>
     <servlet-name>adminServlet</servlet-name>
-    <url-pattern>/admin/admin</url-pattern>
+    <url-pattern>/admin</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
@@ -111,5 +141,52 @@
     <servlet-name>userDeleteServlet</servlet-name>
     <url-pattern>/admin/userdelete</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>postsListServlet</servlet-name>
+    <url-pattern>/admin/postslist</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>postFormServlet</servlet-name>
+    <url-pattern>/admin/postform</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>postUpdateServlet</servlet-name>
+    <url-pattern>/admin/postupdate</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>postDeleteServlet</servlet-name>
+    <url-pattern>/admin/postdelete</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>logoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+ <!-- <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+-->
+  <!--Server Filter that handles site authorization -->
+ <filter>
+    <filter-name>AuthorizationFilter</filter-name>
+    <filter-class>ua.demo.filter.AuthorizationFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AuthorizationFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+
+
 
 </web-app>

@@ -1,10 +1,12 @@
-package ua.demo.servlet;
+package ua.demo.servlet.admin;
 
-import ua.demo.dao.RoleDAO;
+import ua.demo.dao.PostAdminDAO;
+import ua.demo.dao.PostDAO;
 import ua.demo.dao.UserDAO;
-import ua.demo.dao.impl.RoleDAOImpl;
+import ua.demo.dao.impl.PostAdminDAOImpl;
+import ua.demo.dao.impl.PostDAOImpl;
 import ua.demo.dao.impl.UserDAOImpl;
-import ua.demo.entity.Role;
+import ua.demo.entity.Post;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
@@ -16,14 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
- * Created by Sergey on 03.06.2015.
+ * Created by Sergey on 06.06.2015.
  */
-public class UserDeleteServlet extends HttpServlet {
+public class PostDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User curUser=(User)req.getSession(false).getAttribute("curuser");
+        req.setAttribute("curuser",curUser);
 
         //get query string parameters
         String idStr=req.getParameter("id");
@@ -53,8 +56,8 @@ public class UserDeleteServlet extends HttpServlet {
                 Connection con=conf.getConnection();
 
                 //delete user with given id
-                UserDAO userDao=new UserDAOImpl(con);
-                userDao.deleteById(id);
+                PostAdminDAO postDao=new PostAdminDAOImpl(con);
+                boolean ok=postDao.deleteById(id);
 
                 //close connection
                 try {
@@ -63,8 +66,18 @@ public class UserDeleteServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                resp.sendRedirect("/admin/users");
-                return;
+                //create message
+                String[] head=new String[2];
+                if (ok) {
+                    head[0] = "Ok:";
+                    head[1] = "post was deleted";
+                } else {
+                    head[0] = "Error:";
+                    head[1] = "unnable to delete";
+                }
+                req.setAttribute("head",head);
+
+                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
 
             } else {
                 //wait for confirmation
@@ -73,10 +86,12 @@ public class UserDeleteServlet extends HttpServlet {
                 ConnectionFactory conf= ConnectionFactoryFactory.getConnectionFactory();
                 Connection con=conf.getConnection();
 
-                //get user with given id
-                UserDAO userDao=new UserDAOImpl(con);
-                User user=userDao.getById(id);
-                req.setAttribute("user", user);
+                //get post with given id
+                PostDAO postDAO = new PostDAOImpl(con);
+                Post post=postDAO.getById(id);
+
+                req.setAttribute("post", post);
+
 
                 //close connection
                 try {
@@ -92,7 +107,7 @@ public class UserDeleteServlet extends HttpServlet {
                 head[1]="";
                 req.setAttribute("head",head);
 
-                req.getRequestDispatcher("/view/user_delete.jsp").forward(req, resp);
+                req.getRequestDispatcher("/view/post_delete.jsp").forward(req, resp);
 
             }
 
@@ -100,3 +115,4 @@ public class UserDeleteServlet extends HttpServlet {
 
     }
 }
+

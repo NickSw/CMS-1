@@ -1,0 +1,117 @@
+<%
+    String[] head=(String[]) request.getAttribute("head");
+    if (head!=null) { %>
+<div class="block">
+    <h2 class="feature">${head[0]}</h2> ${head[1]}
+</div>
+<% } %>
+
+<div class="block">
+    <h2>Post</h2>
+
+    <form action="/admin/postupdate" enctype="multipart/form-data" method="POST">
+        <input type="hidden" name="id" value="${post.id}">
+        <table border="0" cellspacing="4">
+            <tr>
+                <td valign="top">Image:</td>
+                <td><img src="/images/large_${post.id}.jpg" alt="no large image" width="470" height="260" align="left"/>
+                    <img src="/images/small_${post.id}.jpg" alt="no small image" width="60" height="50" align="right"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Upload image:</td>
+                <td><input type="file" name="large" size="20" /></td>
+            </tr>
+            <tr>
+                <td>Title:<span class="red_asterix">*</span></td>
+                <td><input type="text" name="title" size="95" maxlength="128" value="${post.title}" /></td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td><input type="text" name="date" size="24" maxlength="24" value="${post.creationDate}" /></td>
+            </tr>
+            <tr>
+                <td>Ordering:</td>
+                <td><input type="text" name="ordering" size="3" maxlength="2" value="${post.ordering}" /></td>
+            </tr>
+            <tr>
+                <td>Feature:</td>
+                <td>
+                <c:choose>
+                    <c:when test="${post.mark}">
+                        <input type="checkbox" name="feature" value="true" checked/>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="checkbox" name="feature" value="true" />
+                    </c:otherwise>
+                </c:choose>
+
+                </td>
+            </tr>
+            <tr>
+                <td  valign="top">Tag:</td>
+                <td>
+                    <select name="tag1" size="1">
+                        <option value="-1">no</option>
+                        <c:forEach var="tag" items="${tags}">
+                            <c:choose>
+                                <c:when test="${post.tagId1==tag.id}">
+                                    <option value="${tag.id}" selected >${tag.tagName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${tag.id}" >${tag.tagName}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                    <select name="tag2" size="1">
+                        <option value="-1">no</option>
+                        <c:forEach var="tag" items="${tags}">
+                            <c:choose>
+                                <c:when test="${post.tagId2==tag.id}">
+                                    <option value="${tag.id}" selected >${tag.tagName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${tag.id}" >${tag.tagName}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                    <select name="tag3" size="1">
+                        <option value="-1">no</option>
+                        <c:forEach var="tag" items="${tags}">
+                            <c:choose>
+                                <c:when test="${post.tagId3==tag.id}">
+                                    <option value="${tag.id}" selected >${tag.tagName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${tag.id}" >${tag.tagName}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">Content:<span class="red_asterix">*</span></td>
+                <td>
+                    <textarea name="content" cols="100" rows="50">${post.content}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value=" save "></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
