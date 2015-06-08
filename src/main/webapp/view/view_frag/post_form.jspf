@@ -95,7 +95,14 @@
             <tr>
                 <td valign="top">Content:<span class="red_asterix">*</span></td>
                 <td>
-                    <textarea name="content" cols="100" rows="50">${post.content}</textarea>
+                    <textarea id="editor1" name="content" cols="100" rows="50">${post.content}</textarea>
+                    <script type="text/javascript">
+                        var ckeditor1=CKEDITOR.replace( 'editor1' );
+                        AjexFileManager.init({
+                            returnTo: 'ckeditor',
+                            editor: ckeditor1
+                        });
+                    </script>
                 </td>
             </tr>
             <tr>

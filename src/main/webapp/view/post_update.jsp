@@ -15,6 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Untitled Document</title>
   <link href="/styles/styleadmin.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/ckeditor/ckeditor.js" > </script>
 </head>
 
 <body>
