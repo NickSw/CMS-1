@@ -7,6 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class TagDAOImpl implements TagDAO {
     private final String SELECT_ALL="SELECT * FROM tag";
     private final String SELECT_BY_POST="SELECT id,tag_name FROM tag,(SELECT * FROM post_tag WHERE post_id=?) AS post_tagg WHERE tag_id=tag.id";

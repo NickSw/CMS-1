@@ -19,6 +19,12 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+
+/*
+* servlet renders main page
+*
+* Created by Sergey on 14.05.2015.
+*/
 public class MainServlet extends HttpServlet{
    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

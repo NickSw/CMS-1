@@ -9,7 +9,6 @@ import ua.demo.entity.Tag;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +19,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * servlet creates form for post, if "id" is defined in query string,  form will be filled with post information,
+ * otherwise form will be empty
+ *
  * Created by Sergey on 06.06.2015.
  */
 public class PostFormServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 
@@ -55,25 +58,14 @@ public class PostFormServlet extends HttpServlet {
             PostAdminDAO postDao = new PostAdminDAOImpl(con);
             Post post = postDao.getById(id);
 
-            //check if author edit his post
+            //check if author are allowed to edit this post
             if (curUser.getRole().equals("author")) {
                 if (post.getUserId()!=curUser.getId()) {
                     //access denied
-                    head=new String[2];
-                    head[0]="Access denied: "+curUser.getLogin();
-                    head[1]= " post has diffrent author";
-                    req.setAttribute("head",head);
-
-                    req.getRequestDispatcher("/view/message.jsp").forward(req,resp);
+                    MessageSender.sendMessage("Access denied: "+curUser.getLogin(), " post has different author", req, resp);
+                    return;
                 }
             }
-
-
-
-
-
-
-
 
             req.setAttribute("post", post);
 
@@ -84,16 +76,11 @@ public class PostFormServlet extends HttpServlet {
 
         } else {
             //create new post
-            //corrector are not allowed
+            //corrector are not allowed to create new post
             if (curUser.getRole().equals("corrector")) {
                 //access denied
-                head=new String[2];
-                head[0]="Access denied: "+curUser.getLogin();
-                head[1]= curUser.getRole()+" are not allowed to create new post.";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req,resp);
-
+                MessageSender.sendMessage("Access denied: " + curUser.getLogin(), curUser.getRole()+" are not allowed to create new post.", req, resp);
+                return;
             }
 
             head[0]="New:";

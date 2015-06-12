@@ -20,6 +20,13 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * servlet search some words in title or/and in content of post and if it find them show appropriate posts.
+ * search parameters and words servlet receives via query string
+ *
+ * Created by Sergey on 13.05.2015.
+ */
 public class SearchServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -78,7 +85,7 @@ public class SearchServlet extends HttpServlet{
 
             //creates head
             //creates search string for rendering in page
-            String str="\""+text+"\""+" (in"+(inTitle?" title ":"")+((inTitle&&inContent)?" and ":"")
+            String str="\""+text+"\""+" (in"+(inTitle?" title":"")+((inTitle&&inContent)?" and ":"")
                     +(inContent?" text)":")");
             String[] head=new String[2];
             head[0]="Search by:";

@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class UserDAOImpl implements UserDAO {
     private final String SELECT_ALL="SELECT * FROM user,role where role.id=role_id ORDER BY role_name";
     private final String SELECT_BY_ID="SELECT * FROM user,role where role.id=role_id AND user.id=";

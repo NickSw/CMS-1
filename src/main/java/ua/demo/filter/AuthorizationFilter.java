@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * filter denies access to certain servlets in `/admin`.
+ * This policy is defined with AuthorizationManager
+ *
  * Created by Sergey on 07.06.2015.
  */
 public class AuthorizationFilter implements Filter {

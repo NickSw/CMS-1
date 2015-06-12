@@ -1,5 +1,10 @@
 package ua.demo.entity;
 
+/*
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class User extends Entity{
     private String firstName;
     private String lastName;

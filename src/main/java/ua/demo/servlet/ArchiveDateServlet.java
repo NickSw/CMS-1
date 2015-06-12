@@ -23,6 +23,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/*
+* servlet show posts from archive that were created in certain month and year
+*
+* Created by Sergey on 20.05.2015.
+*/
 public class ArchiveDateServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +52,6 @@ public class ArchiveDateServlet extends HttpServlet{
                 page = Integer.parseInt(param);
             }catch (Exception ex) {page=1;}
             if (page<1) page=1;
-
 
 
             //creates connection
@@ -80,11 +84,11 @@ public class ArchiveDateServlet extends HttpServlet{
 
             //creates Paging Model
             String url=req.getRequestURI()+"?date="+dateStr+"&";
-            PagingModel pm=new PagingModel(postDAO.getAmountOfYearAndMonthPosts(date),page,url);
+            PagingModel pm=new PagingModel(postDAO.getAmountOfYearAndMonthPostsArchive(date),page,url);
             req.setAttribute("page_model",pm);
 
             //creates list of archive posts by year and month
-            List<Post> posts=postDAO.getByYearAndMonth(date,pm.getSqlOffset(),pm.getPAGE_ROWS());
+            List<Post> posts=postDAO.getByYearAndMonthArchive(date,pm.getSqlOffset(),pm.getPAGE_ROWS());
             req.setAttribute("posts",posts);
 
 
@@ -97,9 +101,5 @@ public class ArchiveDateServlet extends HttpServlet{
 
             req.getRequestDispatcher("/view/post_list.jsp").forward(req, resp);
         }
-
-
-
-
-    }
+   }
 

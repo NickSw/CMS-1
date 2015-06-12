@@ -1,13 +1,11 @@
 package ua.demo.servlet.admin;
 
-import ua.demo.dao.RoleDAO;
 import ua.demo.dao.UserDAO;
-import ua.demo.dao.impl.RoleDAOImpl;
 import ua.demo.dao.impl.UserDAOImpl;
-import ua.demo.entity.Role;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
+import ua.demo.util.Hashing;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
+ * servlet obtains "id" parameter from query string, create new user if `id` is empty or cannot be parsed
+ * or update existing user if `id` > 0 in DB.
+ *
  * Created by Sergey on 03.06.2015.
  */
 public class UserUpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 
@@ -40,6 +41,7 @@ public class UserUpdateServlet extends HttpServlet {
         //check paramameters
         boolean error=false;
         String errorMsg="";
+        String password=null;
 
         if ((firstName==null)||(firstName.isEmpty())) firstName=" ";
         if ((lastName==null)||(lastName.isEmpty())) lastName=" ";
@@ -47,14 +49,18 @@ public class UserUpdateServlet extends HttpServlet {
             error=true;
             errorMsg+=" empty login;";
         }
-        if ((email==null)||(email.isEmpty())||(email.indexOf('@')<0)) {
+        int atPos=-1;
+        if ((email==null)||(email.isEmpty())||((atPos=email.indexOf('@'))<1)||(atPos==email.length()-1)||(email.indexOf('@',atPos+1)!=-1)) {
             error=true;
             errorMsg+=" incorrect email;";
         }
         if ((pass1==null)||(pass1.isEmpty())||(pass2==null)||(pass2.isEmpty())||(!pass1.equals(pass2))) {
             error=true;
             errorMsg+=" empty password;";
+        } else {
+            password= Hashing.getHash(pass1);
         }
+
 
         int roleId=-1;
         try {
@@ -70,12 +76,8 @@ public class UserUpdateServlet extends HttpServlet {
         } catch (Exception ex) {}
 
         if (error){
-            String[] head=new String[2];
-            head[0]="incorrect information:";
-            head[1]=errorMsg;
-            req.setAttribute("head",head);
-
-            req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+            MessageSender.sendMessage("incorrect information:",errorMsg,req,resp);
+            return;
         }
         else {
             //create connection
@@ -89,10 +91,10 @@ public class UserUpdateServlet extends HttpServlet {
             user.setLastName(lastName);
             user.setLogin(login);
             user.setEmail(email);
-            user.setPassword(pass1);
+            user.setPassword(password);
             user.setRoleId(roleId);
 
-            //add user
+            //add or update user
             UserDAO userDAO=new UserDAOImpl(con);
             boolean res=userDAO.addUser(user);
 
@@ -104,22 +106,13 @@ public class UserUpdateServlet extends HttpServlet {
             }
 
             if (res) {
-                //ok user was added
-
-                String[] head=new String[2];
-                head[0]="Ok:";
-                head[1]="";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                //ok user was added or updated
+                MessageSender.sendMessage("Ok:", "", req, resp);
+                return;
             }else {
                 //error
-                String[] head=new String[2];
-                head[0]="ERROR:";
-                head[1]="";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                MessageSender.sendMessage("ERROR:", "", req, resp);
+                return;
             }
         }
     }

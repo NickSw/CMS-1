@@ -19,6 +19,13 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+
+/*
+* servlet show full post
+* post_id is received via query string parameter `id`
+*
+* Created by Sergey on 13.05.2015.
+*/
 public class PostServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * servlet log out user i.e.
+ * removes user object from session and closes it
+ *
  * Created by Sergey on 07.06.2015.
  */
 public class LogoutServlet extends HttpServlet{

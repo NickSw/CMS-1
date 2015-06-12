@@ -1,18 +1,12 @@
 package ua.demo.servlet.admin;
 
 import ua.demo.dao.PostAdminDAO;
-import ua.demo.dao.PostDAO;
-import ua.demo.dao.TagDAO;
 import ua.demo.dao.impl.PostAdminDAOImpl;
-import ua.demo.dao.impl.PostDAOImpl;
-import ua.demo.dao.impl.TagDAOImpl;
 import ua.demo.entity.Post;
-import ua.demo.entity.Tag;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
 import ua.demo.util.PagingModel;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 /**
+ * servlet get all posts from DB and render them as table.
+ * servlet can obtain query string to list posts in different order
+ *
  * Created by Sergey on 03.06.2015.
  */
 public class PostsListServlet extends HttpServlet{
+   //number of posts in list
     private final int ROW_NUM_ADMIN=10;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 

@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * provides resize and resize/crop of existing image.
+ * it  is used for resizing uploaded images
+ *
  * Created by Sergey on 06.06.2015.
  */
 public class ResizeImage {

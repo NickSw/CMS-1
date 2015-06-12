@@ -4,7 +4,7 @@
   <display-name>CMS</display-name>
   <servlet>
     <servlet-name>usersServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.admin.UsersServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UsersListServlet</servlet-class>
   </servlet>
   
   <servlet>
@@ -44,7 +44,7 @@
   
   <servlet>
     <servlet-name>userServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.admin.UserServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.UserFormServlet</servlet-class>
   </servlet>
   
   <servlet>
@@ -94,7 +94,7 @@
   
   <servlet>
     <servlet-name>tagServlet</servlet-name>
-    <servlet-class>ua.demo.servlet.admin.TagServlet</servlet-class>
+    <servlet-class>ua.demo.servlet.admin.TagFormServlet</servlet-class>
   </servlet>
   
   <servlet>
@@ -105,6 +105,11 @@
   <servlet>
     <servlet-name>tagDeleteServlet</servlet-name>
     <servlet-class>ua.demo.servlet.admin.TagDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>loadImageServlet</servlet-name>
+    <servlet-class>ua.demo.servlet.LoadImageServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -212,6 +217,11 @@
     <url-pattern>/admin/tagdelete</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>loadImageServlet</servlet-name>
+    <url-pattern>/images/*</url-pattern>
+  </servlet-mapping>
+
  <!-- <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
@@ -225,6 +235,16 @@
   <filter-mapping>
     <filter-name>AuthorizationFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>viewFilter</filter-name>
+    <filter-class>ua.demo.filter.ViewFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>viewFilter</filter-name>
+    <url-pattern>/view/*</url-pattern>
   </filter-mapping>
 
 

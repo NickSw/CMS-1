@@ -43,10 +43,10 @@
 
   <form action="/login" method="POST">
     Username<br>
-    <input type="text" name="login" maxlength="45" size="30" /><br />
+    <input type="text" name="login" maxlength="24" size="30" /><br />
     <br />
     Password<br />
-    <input type="password" name="password" maxlength="45" size="30" /><br />
+    <input type="password" name="password" maxlength="24" size="30" /><br />
     <br />
     <input type="submit" value=" Log in ">
   </form>

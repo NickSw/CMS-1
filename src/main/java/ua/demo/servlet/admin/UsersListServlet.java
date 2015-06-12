@@ -16,9 +16,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UsersServlet extends HttpServlet {
+/**
+ *  servlet get all users from DB and render them as table.
+ *
+ * Created by Sergey on 02.06.2015.
+ */
+
+public class UsersListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 

@@ -14,27 +14,27 @@
         <table border="0">
             <tr>
                 <td>First Name</td>
-                <td><input type="text" name="first" size="24" maxlength="24" value="${user.firstName}"></td>
+                <td><input type="text" name="first" size="32" maxlength="24" value="${user.firstName}"></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="last" size="24" maxlength="24"  value="${user.lastName}"></td>
+                <td><input type="text" name="last" size="32" maxlength="24"  value="${user.lastName}"></td>
             </tr>
             <tr>
                 <td>Login<span class="red_asterix">*</span></td>
-                <td><input type="text" name="login" size="24" maxlength="24"  value="${user.login}"></td>
+                <td><input type="text" name="login" size="32" maxlength="24"  value="${user.login}"></td>
             </tr>
             <tr>
                 <td>E-mail<span class="red_asterix">*</span></td>
-                <td><input type="text" name="email" size="24" maxlength="24"  value="${user.email}"></td>
+                <td><input type="text" name="email" size="32" maxlength="24"  value="${user.email}"></td>
             </tr>
             <tr>
                 <td>Password<span class="red_asterix">*</span></td>
-                <td><input type="password" name="pass1" size="24" maxlength="24"  value="${user.password}"></td>
+                <td><input type="password" name="pass1" size="32" maxlength="24"  value=""></td>
             </tr>
             <tr>
                 <td>Password<span class="red_asterix">*</span></td>
-                <td><input type="password" name="pass2" size="24" maxlength="24"  value="${user.password}"></td>
+                <td><input type="password" name="pass2" size="32" maxlength="24"  value=""></td>
             </tr>
             <tr>
                 <td>Role<span class="red_asterix">*</span></td>

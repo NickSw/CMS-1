@@ -1,6 +1,8 @@
 package ua.demo.util;
 /*
-    class provides Pagination
+ *  class provides Pagination
+ *
+ *  Created by Sergey on 15.05.2015.
  */
 public class PagingModel {
     //amount of elements on page
@@ -64,8 +66,6 @@ public class PagingModel {
         }
         else
         {
-
-
             int size=0;
             boolean leftSimple;
             boolean rightSimple;
@@ -81,7 +81,6 @@ public class PagingModel {
                 leftSimple=false;
             }
 
-
             if (curPage+N_NUM>=LastPageNum-1)
             {
                 size=size+LastPageNum-curPage;
@@ -92,8 +91,6 @@ public class PagingModel {
                 size=size+N_NUM+2;
                 rightSimple=false;
             }
-
-
 
             page =new int[size];
             symbol =new String[size];

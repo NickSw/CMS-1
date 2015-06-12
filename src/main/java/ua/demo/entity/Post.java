@@ -2,6 +2,11 @@ package ua.demo.entity;
 
 import java.util.Date;
 
+/*
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class Post extends Entity{
     private String title;
     private Date creationDate;

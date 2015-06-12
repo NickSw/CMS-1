@@ -14,7 +14,7 @@
         <table border="0">
             <tr>
                 <td>Tag Name<span class="red_asterix">*</span></td>
-                <td><input type="text" name="tag" size="24" maxlength="24" value="${tag.tagName}"></td>
+                <td><input type="text" name="tag" size="32" maxlength="24" value="${tag.tagName}"></td>
             </tr>
 
             <tr>

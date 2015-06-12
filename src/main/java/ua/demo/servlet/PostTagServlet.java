@@ -20,6 +20,16 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+
+
+/*
+* servlet show posts related with certain tag.
+* tag_id is received via query string parameter `id`
+* if something wrong with query string parameter `id` sends redirect to main page
+*
+* Created by Sergey on 13.05.2015.
+*/
+
 public class PostTagServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

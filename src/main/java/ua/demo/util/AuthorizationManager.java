@@ -3,6 +3,9 @@ package ua.demo.util;
 import ua.demo.entity.User;
 
 /**
+ * singleton that defines security policy.
+ * It defines which url can be access by certain user with definite role.
+ *
  * Created by Sergey on 07.06.2015.
  */
 public class AuthorizationManager {

@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <td>Title:<span class="red_asterix">*</span></td>
-                <td><input type="text" name="title" size="95" maxlength="128" value="${post.title}" /></td>
+                <td><input type="text" name="title" size="95" maxlength="80" value="${post.title}" /></td>
             </tr>
             <tr>
                 <td>Date:</td>

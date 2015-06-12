@@ -5,6 +5,7 @@ import ua.demo.dao.impl.UserDAOImpl;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
+import ua.demo.util.Hashing;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * servlet with method doGet generates page to login user,
+ * method doPost receives login-password from login page, checks correctness
+ * and compare them with information from DB
+ * if login-password matches creates session and save there reletaed user object,
+ * otherwise loads login page with message
+ *
  * Created by Sergey on 07.06.2015.
  */
 public class LoginServlet extends HttpServlet{
@@ -37,6 +44,8 @@ public class LoginServlet extends HttpServlet{
             req.setAttribute("error",errorMsg);
             req.getRequestDispatcher("/view/login.jsp").forward(req,resp);
         } else {
+
+            password= Hashing.getHash(password);
 
             //creates connection
             ConnectionFactory conf= ConnectionFactoryFactory.getConnectionFactory();

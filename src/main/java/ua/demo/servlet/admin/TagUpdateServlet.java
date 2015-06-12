@@ -1,9 +1,7 @@
 package ua.demo.servlet.admin;
 
 import ua.demo.dao.TagDAO;
-import ua.demo.dao.UserDAO;
 import ua.demo.dao.impl.TagDAOImpl;
-import ua.demo.dao.impl.UserDAOImpl;
 import ua.demo.entity.Tag;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
@@ -18,11 +16,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * servlet obtains "id" parameter from query string, create new tag if `id` is empty or cannot be parsed
+ * or update existing tag if `id` > 0 in DB.
+ *
  * Created by Sergey on 08.06.2015.
  */
 public class TagUpdateServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 
@@ -51,12 +53,8 @@ public class TagUpdateServlet extends HttpServlet{
         } catch (Exception ex) {}
 
         if (error){
-            String[] head=new String[2];
-            head[0]="incorrect information:";
-            head[1]=errorMsg;
-            req.setAttribute("head",head);
-
-            req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+            MessageSender.sendMessage("incorrect information:", errorMsg, req, resp);
+            return;
         }
         else {
             //create connection
@@ -82,21 +80,13 @@ public class TagUpdateServlet extends HttpServlet{
 
             if (res) {
                 //ok tag was added
-
-                String[] head=new String[2];
-                head[0]="Ok:";
-                head[1]="";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                MessageSender.sendMessage("Ok:", "", req, resp);
+                return;
             }else {
                 //error
-                String[] head=new String[2];
-                head[0]="ERROR:";
-                head[1]="";
-                req.setAttribute("head",head);
+                MessageSender.sendMessage("ERROR:", "", req, resp);
+                return;
 
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
             }
         }
     }

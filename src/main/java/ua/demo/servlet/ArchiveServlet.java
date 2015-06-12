@@ -20,6 +20,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+/*
+* servlet show all posts
+*
+* Created by Sergey on 13.05.2015.
+*/
 public class ArchiveServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,10 +61,10 @@ public class ArchiveServlet extends HttpServlet{
 
         //creates Paging Model
         String url=req.getRequestURI()+"?";
-        PagingModel pm=new PagingModel(postDAO.getAmountOfAllPosts(),page,url);
+        PagingModel pm=new PagingModel(postDAO.getAmountOfArchivePosts(),page,url);
         req.setAttribute("page_model",pm);
         //creates list of archive posts start at `SqlOffset`
-        List<Post> archivePosts=postDAO.getAll(pm.getSqlOffset(),pm.getPAGE_ROWS());
+        List<Post> archivePosts=postDAO.getArchivePosts(pm.getSqlOffset(),pm.getPAGE_ROWS());
         req.setAttribute("posts", archivePosts);
 
         //close connection

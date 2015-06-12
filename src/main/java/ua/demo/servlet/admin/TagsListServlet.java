@@ -1,9 +1,7 @@
 package ua.demo.servlet.admin;
 
 import ua.demo.dao.TagDAO;
-import ua.demo.dao.UserDAO;
 import ua.demo.dao.impl.TagDAOImpl;
-import ua.demo.dao.impl.UserDAOImpl;
 import ua.demo.entity.Tag;
 import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
@@ -19,11 +17,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * servlet get all tags from DB and render them as table.
+ *
  * Created by Sergey on 08.06.2015.
  */
 public class TagsListServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 

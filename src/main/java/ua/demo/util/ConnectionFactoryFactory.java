@@ -1,5 +1,12 @@
 package ua.demo.util;
 
+/**
+ *
+ * ConnectionFactoryFactory that produces some kind of ConnectionFactory object contained in `enum`.
+ *
+ * Created by Sergey on 14.05.2015.
+ */
+
 public class ConnectionFactoryFactory {
     enum Type {driverMySQL,poolMySQL}
     private static Type defaultType=Type.driverMySQL;

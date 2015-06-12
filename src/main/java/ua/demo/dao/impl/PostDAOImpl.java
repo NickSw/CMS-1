@@ -7,6 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
+/*
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class PostDAOImpl implements PostDAO {
     private final int RECENT_POSTS_AMOUNT=6;
     private final int AMOUNT_OF_SIMBOLS_IN_CONTENT=200;
@@ -17,8 +22,10 @@ public class PostDAOImpl implements PostDAO {
     private final String SELECT_BY_ID="SELECT * FROM post WHERE id=?";
     private final String SELECT_BY_TAG1="SELECT * FROM post,(SELECT * FROM post_tag WHERE tag_id=";
     private final String SELECT_BY_TAG2=") AS postt WHERE post.id=post_id ORDER BY creation_date DESC LIMIT ";
-    private final String SELECT_ALL="SELECT * FROM post  ORDER BY creation_date DESC LIMIT";
+    private final String SELECT_ARCHIVE="SELECT * FROM post WHERE ordering<1 ORDER BY creation_date DESC LIMIT";
+    private final String SELECT_COUNT_ARCHIVE="SELECT COUNT(*) FROM post WHERE ordering<1";
     private final String SELECT_COUNT_ALL="SELECT COUNT(*) FROM post";
+
     private final String SELECT_COUNT_TAG1="SELECT COUNT(*) FROM post,(SELECT * FROM post_tag WHERE tag_id=";
     private final String SELECT_COUNT_TAG2=") AS postt WHERE post.id=post_id";
 
@@ -26,9 +33,9 @@ public class PostDAOImpl implements PostDAO {
     private final String SELECT_BY_SEARCH_INTITLE=" title LIKE '%";
     private final String SELECT_BY_SEARCH_INCONTENT=" content LIKE '%";
 
-    private final String SELECT_DATES="SELECT id,title,creation_date,EXTRACT(YEAR FROM creation_date) AS `year`,EXTRACT(MONTH FROM creation_date) AS `month` FROM post GROUP BY year,month ORDER BY creation_date DESC";
-    private final String SELECT_BY_YEAR_AND_MONTH="SELECT * FROM post WHERE EXTRACT(YEAR FROM creation_date)=EXTRACT(YEAR FROM '${date}') AND EXTRACT(MONTH FROM creation_date)=EXTRACT(MONTH FROM '${date}') ORDER BY creation_date DESC";
-    private final String SELECT_COUNT_BY_YEAR_AND_MONTH="SELECT COUNT(*) FROM post WHERE EXTRACT(YEAR FROM creation_date)=EXTRACT(YEAR FROM '${date}') AND EXTRACT(MONTH FROM creation_date)=EXTRACT(MONTH FROM '${date}')";
+    private final String SELECT_DATES_IN_ARCHIVE="SELECT id,title,creation_date,EXTRACT(YEAR FROM creation_date) AS `year`,EXTRACT(MONTH FROM creation_date) AS `month` FROM post WHERE ordering<1 GROUP BY year,month ORDER BY creation_date DESC";
+    private final String SELECT_BY_YEAR_AND_MONTH="SELECT * FROM post WHERE ordering<1 AND EXTRACT(YEAR FROM creation_date)=EXTRACT(YEAR FROM '${date}') AND EXTRACT(MONTH FROM creation_date)=EXTRACT(MONTH FROM '${date}') ORDER BY creation_date DESC";
+    private final String SELECT_COUNT_BY_YEAR_AND_MONTH_IN_ARCHIVE="SELECT COUNT(*) FROM post WHERE ordering<1 AND EXTRACT(YEAR FROM creation_date)=EXTRACT(YEAR FROM '${date}') AND EXTRACT(MONTH FROM creation_date)=EXTRACT(MONTH FROM '${date}')";
 
     private Connection con;
 
@@ -37,11 +44,11 @@ public class PostDAOImpl implements PostDAO {
     }
 
 
-    public int getAmountOfYearAndMonthPosts(Date date) {
+    public int getAmountOfYearAndMonthPostsArchive(Date date) {
         SimpleDateFormat dateShort=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String dateStr=dateShort.format(date);
 
-        String SQLquery=SELECT_COUNT_BY_YEAR_AND_MONTH;
+        String SQLquery=SELECT_COUNT_BY_YEAR_AND_MONTH_IN_ARCHIVE;
         SQLquery=SQLquery.replace("${date}",dateStr);
 
         try {
@@ -60,7 +67,7 @@ public class PostDAOImpl implements PostDAO {
         return -1;
     }
 
-    public List<Post> getByYearAndMonth(Date date, int start, int limit) {
+    public List<Post> getByYearAndMonthArchive(Date date, int start, int limit) {
         List<Post> posts=new ArrayList<Post>();
         try {
             SimpleDateFormat dateShort=new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -92,7 +99,7 @@ public class PostDAOImpl implements PostDAO {
         List<Date> dates=new ArrayList<Date>();
         try {
             Statement stat=con.createStatement();
-            ResultSet rs=stat.executeQuery(SELECT_DATES + " LIMIT 0," + AMOUNT_OF_DATES_IN_ARCHIVE_BLOCK);
+            ResultSet rs=stat.executeQuery(SELECT_DATES_IN_ARCHIVE + " LIMIT 0," + AMOUNT_OF_DATES_IN_ARCHIVE_BLOCK);
             while(rs.next())
             {
                 Date date=(rs.getTimestamp("creation_date"));
@@ -256,10 +263,10 @@ public class PostDAOImpl implements PostDAO {
         return null;
     }
 
-    public List<Post> getAll(int start,int limit) {
+    public List<Post> getArchivePosts(int start,int limit) {
         try {
             Statement pstat = con.createStatement();
-            ResultSet rs=pstat.executeQuery(SELECT_ALL + " " + (start-1) + "," + limit);
+            ResultSet rs=pstat.executeQuery(SELECT_ARCHIVE + " " + (start-1) + "," + limit);
             List<Post> posts = new ArrayList<Post>();
             while(rs.next())
             {
@@ -275,10 +282,10 @@ public class PostDAOImpl implements PostDAO {
         return null;
     }
 
-    public int getAmountOfAllPosts() {
+    public int getAmountOfArchivePosts() {
         try {
             Statement stat = con.createStatement();
-            ResultSet rs=stat.executeQuery(SELECT_COUNT_ALL);
+            ResultSet rs=stat.executeQuery(SELECT_COUNT_ARCHIVE);
             int count=-1;
             while(rs.next())
             {

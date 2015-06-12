@@ -1,5 +1,11 @@
 package ua.demo.entity;
 
+/*
+* class is ancestor of all entities
+*
+* Created by Sergey on 14.05.2015.
+*/
+
 public class Entity {
     private int id;
 

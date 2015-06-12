@@ -1,7 +1,7 @@
 <div class="block">
     <h3>SEARCH</h3>
     <form class="search" action="/search" method="GET">
-        <input type="text" name="text" size="18" max length="50"/><br>
+        <input type="text" name="text" size="18" maxlength="40"/><br>
         <input type="checkbox" name="title" value="true" checked/> in title<br>
         <input type="checkbox" name="content" value="true" /> in text<br>
         <input type="submit" value=" search ">

@@ -11,7 +11,6 @@ import ua.demo.entity.User;
 import ua.demo.util.ConnectionFactory;
 import ua.demo.util.ConnectionFactoryFactory;
 import ua.demo.util.ResizeImage;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,11 +27,41 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * servlet receives with method doPost through "multipart/form-data" information necessary to create or update post,
+ * including image upload.
+ *
  * Created by Sergey on 04.06.2015.
  */
 public class PostUpdateServlet extends HttpServlet{
+    //true if used open shift
+    private boolean isOpenShift=false;
+
+    //path to directory on server in which images are uploaded
+    private String dataDirPath;
+    //path to temporary directory on server
+    private String tempDirPath;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        //checks if project deployed in openShift
+        if ((tempDirPath=System.getenv("OPENSHIFT_TMP_DIR"))!=null){
+            isOpenShift=true;
+        }
+        if (isOpenShift) {
+            //for open shift
+            dataDirPath=System.getenv("OPENSHIFT_DATA_DIR");
+        } else {
+            //for local
+            dataDirPath=getServletContext().getRealPath("/images/")+"/";
+        }
+
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
 
@@ -44,7 +73,16 @@ public class PostUpdateServlet extends HttpServlet{
 
             // Configure a repository (to ensure a secure temp location is used)
             ServletContext servletContext = this.getServletConfig().getServletContext();
-            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+
+            File repository=null;
+
+            if (isOpenShift) {
+                //for open shift
+                repository = new File(tempDirPath);
+            } else {
+                //for local
+                repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+            }
             factory.setRepository(repository);
 
             // Create a new file upload handler
@@ -52,7 +90,7 @@ public class PostUpdateServlet extends HttpServlet{
 
             //create object Post
             Post post=new Post();
-            String path="";
+            String path=null;
 
             // Parse the request
             try {
@@ -67,12 +105,8 @@ public class PostUpdateServlet extends HttpServlet{
                         String errorMsg=processFormField(item,post,curUser);
                         if (errorMsg!=null)
                         {
-                            String[] head=new String[2];
-                            head[0]="Incorrect information:";
-                            head[1]=errorMsg;
-                            req.setAttribute("head",head);
-
-                            req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                            MessageSender.sendMessage("Incorrect information:", errorMsg, req, resp);
+                            return;
                         }
                     }
                 }
@@ -123,44 +157,26 @@ public class PostUpdateServlet extends HttpServlet{
                 }
                     if (path==null)
                 {
-//                    String[] head=new String[2];
-//                    head[0]="Warranty:";
-//                    head[1]="post has been added to DB, but file was not uploaded";
-//
-//                    req.setAttribute("head",head);
-//
-//                    req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                    //post has been added to DB, but image was not uploaded
+                    MessageSender.sendMessage("Warranty:", "post has been added or modified, but image was not uploaded, maybe it has been uploaded before.", req, resp);
+                    return;
                 }
 
 
             } else {
                 //post has not been added
-                String[] head=new String[2];
-                head[0]="Error:";
-                head[1]="post has not been added to DB";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                MessageSender.sendMessage("Error:", "post has not been added to DB", req, resp);
+                return;
             }
 
             } catch (FileUploadException e) {
                 e.printStackTrace();
-
-                String[] head=new String[2];
-                head[0]="Error:";
-                head[1]="";
-                req.setAttribute("head",head);
-
-                req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
+                MessageSender.sendMessage("Error:", "", req, resp);
+                return;
             }
             //all right, post was added and image was upload
-            String[] head=new String[2];
-            head[0]="OK:";
-            head[1]="post was added";
-            req.setAttribute("head",head);
-
-            req.getRequestDispatcher("/view/message.jsp").forward(req, resp);
-
+            MessageSender.sendMessage("OK:", "post was added", req, resp);
+            return;
       }
     }
 
@@ -176,7 +192,7 @@ public class PostUpdateServlet extends HttpServlet{
 
             // Process a file upload
         try {
-            String path = getServletContext().getRealPath("/images/" +fileNameLarge);
+            String path = dataDirPath +fileNameLarge;
             File uploadedFile = new File(path);
 
             uploadedFile.createNewFile();
@@ -186,7 +202,7 @@ public class PostUpdateServlet extends HttpServlet{
             ResizeImage ri=new ResizeImage();
             ri.fitWidth(path);
             //creates small copy
-            String resPath = getServletContext().getRealPath("/images/" +fileNameSmall);
+            String resPath = dataDirPath +fileNameSmall;
             ri.resizeAndCrop(path,resPath);
 
 
@@ -198,7 +214,7 @@ public class PostUpdateServlet extends HttpServlet{
     }
 
     //checks and fill information to object Post
-    //if somthing wrong return error message otherwise return null
+    //if something wrong return error message otherwise return null
     private String processFormField(FileItem item,Post post,User curUser){
         // Process a regular form field
 
@@ -294,6 +310,7 @@ public class PostUpdateServlet extends HttpServlet{
                 errorMsg="empty content";
             } else {
                 value=value.replace("'","`");
+//                System.out.println(value.length());
                 post.setContent(value);
             }
         }
