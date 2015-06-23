@@ -22,18 +22,23 @@
     </tr>
 
       <%
+        User curuser=(User)request.getAttribute("curuser");
         List<User> users=(List<User>) request.getAttribute("users");
         int i=0;
         for (User user:users) {
-          if (i%2!=0) out.println("<tr class=\"even\">");
+          if (i % 2 != 0) out.println("<tr class=\"even\">");
           else out.println("<tr>");
-          out.println("<td>"+user.getFirstName()+"</td>");
-          out.println("<td>"+user.getLastName()+"</td>");
-          out.println("<td>"+user.getLogin()+"</td>");
-          out.println("<td>"+user.getEmail()+"</td>");
-          out.println("<td>"+user.getRole()+"</td>");
-          out.println("<td><a href=\"/admin/user?id="+user.getId()+"\">update</a></td>");
-          out.println("<td><a href=\"/admin/userdelete?id="+user.getId()+"\">delete</a></td>");
+          out.println("<td>" + user.getFirstName() + "</td>");
+          out.println("<td>" + user.getLastName() + "</td>");
+          out.println("<td>" + user.getLogin() + "</td>");
+          out.println("<td>" + user.getEmail() + "</td>");
+          out.println("<td>" + user.getRole() + "</td>");
+          out.println("<td><a href=\"/admin/user?id=" + user.getId() + "\">update</a></td>");
+          if (user.getId() != curuser.getId()) {
+            out.println("<td><a href=\"/admin/userdelete?id=" + user.getId() + "\">delete</a></td>");
+          } else {
+            out.println("<td></td>");
+          }
           out.println("</tr>");
         i++;
         }%>

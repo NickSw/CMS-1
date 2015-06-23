@@ -91,9 +91,11 @@ public class TagDAOImpl implements TagDAO {
         return null;
     }
 
-    public boolean addTag(Tag tag) {
+    //returns 1 if tag was added or updated
+    //returns -10 for duplicate entry error
+    //returns -1 for unknown error
+    public int addTag(Tag tag) {
         int res=-1;
-        boolean error=false;
         if (tag.getId() < 1) {
             // add new tag
             try {
@@ -104,8 +106,8 @@ public class TagDAOImpl implements TagDAO {
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
-                error=true;
                 e.printStackTrace();
+                if (e.getMessage().contains("Duplicate entry")) res=-10;
             }
         }
         else {
@@ -119,13 +121,12 @@ public class TagDAOImpl implements TagDAO {
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
-                error=true;
                 e.printStackTrace();
+                if (e.getMessage().contains("Duplicate entry")) res=-10;
             }
         }
 
-        if ((res>0)&&(!error)) return true;
-        else return false;
+        return res;
     }
 
 

@@ -93,11 +93,8 @@ public class PostTagServlet extends HttpServlet {
             req.setAttribute("page_model",pm);
             //creates list of posts with tag id start at `SqlOffset`
             List<Post> tagPosts=postDAO.getByTag(id, pm.getSqlOffset(), pm.getPAGE_ROWS());
-            if (tagPosts == null) {
-                resp.sendRedirect("/");
-                return;
-            } else req.setAttribute("posts", tagPosts);
 
+            req.setAttribute("posts", tagPosts);
 
 
             //close connection

@@ -23,7 +23,7 @@ import java.sql.SQLException;
  */
 public class UserUpdateServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //get current user from session
         User curUser=(User)req.getSession(false).getAttribute("curuser");
         req.setAttribute("curuser",curUser);
@@ -54,10 +54,20 @@ public class UserUpdateServlet extends HttpServlet {
             error=true;
             errorMsg+=" incorrect email;";
         }
-        if ((pass1==null)||(pass1.isEmpty())||(pass2==null)||(pass2.isEmpty())||(!pass1.equals(pass2))) {
+        if ((pass1==null)||(pass1.isEmpty())||(pass2==null)||(pass2.isEmpty())) {
             error=true;
             errorMsg+=" empty password;";
         } else {
+            if ((pass1.length()<4)||(pass2.length()<4)) {
+                error=true;
+                errorMsg+=" password must be at least 4 symbols;";
+            } else {
+                if ((!pass1.equals(pass2))) {
+                    error = true;
+                    errorMsg += " incorrect password;";
+                }
+            }
+
             password= Hashing.getHash(pass1);
         }
 
@@ -96,7 +106,7 @@ public class UserUpdateServlet extends HttpServlet {
 
             //add or update user
             UserDAO userDAO=new UserDAOImpl(con);
-            boolean res=userDAO.addUser(user);
+            int res=userDAO.addUser(user);
 
             //close connection
             try {
@@ -105,13 +115,21 @@ public class UserUpdateServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            if (res) {
-                //ok user was added or updated
-                MessageSender.sendMessage("Ok:", "", req, resp);
+            if (res>0) {
+                //ok user has been added or updated
+                MessageSender.sendMessage("Ok:", "user has been added or updated", req, resp);
                 return;
             }else {
                 //error
-                MessageSender.sendMessage("ERROR:", "", req, resp);
+                String msg;
+                if (res==-10) {
+                    //duplicate entry
+                    msg = "user with given name already exists";
+                } else {
+                    //unknown error
+                    msg = "";
+                }
+                MessageSender.sendMessage("ERROR:", msg, req, resp);
                 return;
             }
         }

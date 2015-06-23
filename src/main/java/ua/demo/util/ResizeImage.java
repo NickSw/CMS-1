@@ -30,10 +30,10 @@ public class ResizeImage {
 
 
             //calculate scale
-            double scale=largeWidth/(double)orWidth;
+            float scale=largeWidth/(float)orWidth;
 
-            int width=(int)Math.floor(orWidth*scale);
-            int height=(int)Math.floor(orHeight*scale);
+            int width=Math.round(orWidth*scale);
+            int height=Math.round(orHeight*scale);
 
             //creates image with preserve aspect ratio with size by smallest size
             Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -62,15 +62,15 @@ public class ResizeImage {
 
 
             //calculate scale
-            double xScale=desWidth/(double)orWidth;
-            double yScale=desHeight/(double)orHeight;
+            float xScale=desWidth/(float)orWidth;
+            float yScale=desHeight/(float)orHeight;
 
-            double scale;
+            float scale;
             if (yScale>xScale) scale=yScale;
             else scale=xScale;
 
-            int width=(int)Math.floor(orWidth*scale);
-            int height=(int)Math.floor(orHeight*scale);
+            int width=Math.round(orWidth*scale);
+            int height=Math.round(orHeight*scale);
 
             //creates image with preserve aspect ratio with size by smallest size
             Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -83,8 +83,9 @@ public class ResizeImage {
 
 
             //crop image to given size
-            int x=(int)Math.floor(((width-desWidth)/2d));
-            int y=(int)Math.floor(((height-desHeight)/2d));
+            int x=Math.round(((width-desWidth)/2f));
+            int y=Math.round(((height-desHeight)/2f));
+
 
             Image cropImage=changedImage.getSubimage(x,y,desWidth,desHeight);
             BufferedImage resImage = new BufferedImage(desWidth, desHeight, BufferedImage.TYPE_INT_RGB);

@@ -69,7 +69,7 @@ public class TagUpdateServlet extends HttpServlet{
 
             //add tag
             TagDAO tagDao=new TagDAOImpl(con);
-            boolean res=tagDao.addTag(tag);
+            int res=tagDao.addTag(tag);
 
             //close connection
             try {
@@ -78,13 +78,21 @@ public class TagUpdateServlet extends HttpServlet{
                 e.printStackTrace();
             }
 
-            if (res) {
-                //ok tag was added
-                MessageSender.sendMessage("Ok:", "", req, resp);
+            if (res>0) {
+                //ok tag has been added or updated
+                MessageSender.sendMessage("Ok:", "tag has been added or updated", req, resp);
                 return;
             }else {
                 //error
-                MessageSender.sendMessage("ERROR:", "", req, resp);
+                String msg;
+                if (res==-10) {
+                    //duplicate entry
+                    msg = "tag with given name already exists";
+                } else {
+                    //unknown error
+                    msg="";
+                }
+                MessageSender.sendMessage("ERROR:",msg, req, resp);
                 return;
 
             }

@@ -97,9 +97,11 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    public boolean addUser(User user) {
+    //returns 1 if tag was added or updated
+    //returns -10 for duplicate entry error
+    //returns -1 for unknown error
+    public int addUser(User user) {
         int res=-1;
-        boolean error=false;
         if (user.getId() < 1) {
             // add new user
             try {
@@ -115,7 +117,7 @@ public class UserDAOImpl implements UserDAO {
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
-                error=true;
+                if (e.getMessage().contains("Duplicate entry")) res=-10;
                 e.printStackTrace();
             }
         }
@@ -135,13 +137,13 @@ public class UserDAOImpl implements UserDAO {
                 res = stat.executeUpdate(query);
 
             } catch (SQLException e) {
-                error=true;
+                if (e.getMessage().contains("Duplicate entry")) res=-10;
                 e.printStackTrace();
+
             }
         }
 
-        if ((res>0)&&(!error)) return true;
-        else return false;
+        return res;
     }
 
     public boolean deleteById(int id) {

@@ -178,6 +178,11 @@ a {
 	color:#00F;
 }
 
+.tips {
+	font-size:12px;
+	font-style:italic;
+}
+
 .red_asterix {
 	color:red;
 	vertical-align:top;

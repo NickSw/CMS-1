@@ -9,7 +9,7 @@
 
 <div class="block">
     <h2>User</h2>
-    <form action="/admin/userupdate" method="GET">
+    <form action="/admin/userupdate" method="POST">
         <input type="hidden" name="id" value="${user.id}">
         <table border="0">
             <tr>

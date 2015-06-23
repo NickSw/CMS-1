@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -52,7 +53,7 @@ public class PostDeleteServlet extends HttpServlet {
                 ConnectionFactory conf= ConnectionFactoryFactory.getConnectionFactory();
                 Connection con=conf.getConnection();
 
-                //delete user with given id
+                //delete post with given id
                 PostAdminDAO postDao=new PostAdminDAOImpl(con);
                 boolean ok=postDao.deleteById(id);
 
@@ -66,6 +67,23 @@ public class PostDeleteServlet extends HttpServlet {
                 //create message
                 String[] head=new String[2];
                 if (ok) {
+                    //delete image
+
+                    //get real path for data directory
+                    String dataDirPath=System.getenv("OPENSHIFT_DATA_DIR");
+                    if (dataDirPath==null) {
+                        //for local
+                        dataDirPath=getServletContext().getRealPath("/images/")+"/";
+                    }
+
+                    String PathLarge=dataDirPath+"large_"+id+".jpg";
+                    String PathSmall=dataDirPath+"small_"+id+".jpg";
+                    File large=new File(PathLarge);
+                    File small=new File(PathSmall);
+                    if (large.exists()) large.delete();
+                    if (small.exists()) small.delete();
+
+
                     MessageSender.sendMessage("Ok:", "post was deleted", req, resp);
                     return;
                 } else {

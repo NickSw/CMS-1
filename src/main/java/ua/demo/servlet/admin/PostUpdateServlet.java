@@ -165,7 +165,16 @@ public class PostUpdateServlet extends HttpServlet{
 
             } else {
                 //post has not been added
-                MessageSender.sendMessage("Error:", "post has not been added to DB", req, resp);
+                String msg;
+                if (id==-10) {
+                    //duplicate post title
+                    msg="post with given title already exists";
+                } else {
+                    //unknown error
+                    msg="post has not been added to DB";
+                }
+
+                MessageSender.sendMessage("Error:",msg , req, resp);
                 return;
             }
 
@@ -175,7 +184,7 @@ public class PostUpdateServlet extends HttpServlet{
                 return;
             }
             //all right, post was added and image was upload
-            MessageSender.sendMessage("OK:", "post was added", req, resp);
+            MessageSender.sendMessage("OK:", "post has been added or updated", req, resp);
             return;
       }
     }
@@ -188,7 +197,12 @@ public class PostUpdateServlet extends HttpServlet{
         if (!item.getContentType().equals("image/jpeg")){
             return null;
         }
-            long sizeInBytes = item.getSize();
+
+        //check file size, must be less than 300kb=300*1024=307200bytes
+        long sizeInBytes = item.getSize();
+        if (sizeInBytes>307200) {
+            return null;
+        }
 
             // Process a file upload
         try {
@@ -258,7 +272,7 @@ public class PostUpdateServlet extends HttpServlet{
             try {
                 ordering=Integer.parseInt(value);
             } catch (Exception ex){
-
+            if (ordering<0) ordering=0;
             }
             post.setOrdering(ordering);
         }

@@ -15,13 +15,16 @@
         <table border="0" cellspacing="4">
             <tr>
                 <td valign="top">Image:</td>
-                <td><img src="/images/large_${post.id}.jpg" alt="no large image" width="470" height="260" align="left"/>
+                <td><img src="/images/large_${post.id}.jpg" alt="no large image" width="470" align="left"/>
                     <img src="/images/small_${post.id}.jpg" alt="no small image" width="60" height="50" align="right"/>
                 </td>
             </tr>
             <tr>
                 <td>Upload image:</td>
-                <td><input type="file" name="large" size="20" /></td>
+                <td>
+                    <input type="file" name="large" size="20" /><br />
+                    <span class="tips">requirements to image file: .jpg; size<300kB; recommended dimensions: 470x260px</span>
+                </td>
             </tr>
             <tr>
                 <td>Title:<span class="red_asterix">*</span></td>
